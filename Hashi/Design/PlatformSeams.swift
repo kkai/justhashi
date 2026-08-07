@@ -148,7 +148,7 @@ struct SheetCloseButton: View {
 /// **Restoring on disappear is the load-bearing half.** The recogniser belongs
 /// to the `UINavigationController`, not to this screen, so leaving it disabled
 /// would kill swipe-back everywhere else for the rest of the session.
-private struct SwipeBackDisabler: UIViewControllerRepresentable {
+struct SwipeBackDisabler: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> Controller { Controller() }
     func updateUIViewController(_ controller: Controller, context: Context) {}
 
