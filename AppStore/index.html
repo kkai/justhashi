@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Just Hashi — learn to build the bridges</title>
+<meta name="description" content="Just Hashi teaches you to play Hashi properly. Nine lessons, hints that name the technique, and every puzzle solvable by reasoning alone.">
+<style>
+  /* The app's own palette, from Theme.swift. No web fonts: the system rounded
+     face is what the app uses, and a privacy page that phones a font CDN would
+     be saying one thing and doing another. */
+  :root {
+    --sea: #eaeff1; --surface: #ffffff; --island: #ffffff; --rim: rgba(19,41,67,.85);
+    --ink: #131e2b; --ink-soft: rgba(19,30,43,.62); --bridge: #1b426d;
+    --bridge-wash: rgba(27,66,109,.12); --foam: #6da59d; --vermillion: #d34a32;
+    --hairline: rgba(19,30,43,.14);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --sea: #0b131d; --surface: #1b2735; --island: #e0e3dd; --rim: #0b131d;
+            --ink: #e2e7e9; --ink-soft: rgba(226,231,233,.62); --bridge: #7aa3cf;
+            --bridge-wash: rgba(122,163,207,.18); --hairline: rgba(226,231,233,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--sea); color: var(--ink);
+         font: 17px/1.65 ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  header { padding: 64px 0 8px; text-align: center; }
+  .eyebrow { font-size: 14px; font-weight: 600; letter-spacing: .34em;
+             color: var(--ink-soft); text-transform: uppercase; }
+  h1 { font-size: 56px; font-weight: 800; letter-spacing: -.03em; margin: 6px 0 14px; }
+  /* The signature, drawn in the game's own language: two islands, one double
+     bridge. Same lockup as the app's home screen. */
+  .lockup { display: flex; align-items: center; justify-content: center; gap: 9px; }
+  .dot { width: 17px; height: 17px; border-radius: 50%;
+         background: var(--island); border: 2.5px solid var(--rim); }
+  .rails { display: flex; flex-direction: column; gap: 5px; width: 62px; }
+  .rails i { display: block; height: 3px; border-radius: 2px; background: var(--bridge); }
+  .tagline { font-size: 21px; color: var(--ink-soft); margin: 22px 0 0; text-align: center; }
+  .lede { font-size: 19px; margin: 34px 0 0; }
+  h2 { font-size: 24px; letter-spacing: -.02em; margin: 52px 0 10px; }
+  h3 { font-size: 17px; margin: 26px 0 4px; }
+  p { margin: 0 0 14px; }
+  a { color: var(--bridge); }
+  .card { background: var(--surface); border-radius: 18px; padding: 26px; margin: 22px 0; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 560px) { .cols { grid-template-columns: 1fr; } h1 { font-size: 42px; } }
+  .cols h3 { margin-top: 0; }
+  ul { margin: 0; padding-left: 20px; } li { margin-bottom: 6px; }
+  /* Playable board */
+  #board { display: block; margin: 0 auto; touch-action: manipulation; }
+  #board .isl { cursor: pointer; }
+  .boardnote { text-align: center; color: var(--ink-soft); font-size: 15px; min-height: 26px; margin: 6px 0 0; }
+  .btn { display: inline-block; background: var(--bridge); color: var(--island);
+         border: 0; border-radius: 11px; padding: 9px 16px; font: inherit;
+         font-weight: 600; font-size: 15px; cursor: pointer; }
+  footer { border-top: 1px solid var(--hairline); margin-top: 60px; padding: 22px 0 70px;
+           color: var(--ink-soft); font-size: 14px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Just</div>
+  <h1>Hashi</h1>
+  <div class="lockup" aria-hidden="true">
+    <span class="dot"></span><span class="rails"><i></i><i></i></span><span class="dot"></span>
+  </div>
+  <p class="tagline">Learn to build the bridges.</p>
+</header>
+
+<p class="lede">Hashi is a puzzle of islands and bridges. Each island shows a number, and
+that is exactly how many bridges must touch it. Bridges run straight, never cross, and at
+most two join any pair. When you are done, every island belongs to one connected network.
+That is the whole rulebook. Getting good at it is another matter, and that is what the app
+is for.</p>
+
+<h2>Try it</h2>
+<div class="card">
+  <p style="margin-top:0;color:var(--ink-soft);font-size:15px">Tap an island, then tap
+  the one you want to link. Tap the same pair again for a double bridge, once more to
+  clear it. This is the board the app's first lesson uses.</p>
+  <svg id="board" width="440" height="270" viewBox="0 0 440 270" role="application"
+       aria-label="A small Hashi puzzle you can solve"></svg>
+  <p class="boardnote" id="note">Four islands, one connected world.</p>
+  <p style="text-align:center;margin:10px 0 0"><button class="btn" id="reset">Start over</button></p>
+</div>
+
+<h2>How it teaches</h2>
+<p>Most puzzle apps leave you to work out the technique yourself, or hand you the answer
+when you are stuck. Just Hashi does neither.</p>
+
+<h3>Nine lessons, one idea at a time</h3>
+<p>From the rules through to chasing a what-if two steps before it breaks. Each lesson is a
+short board where the technique is the way through, rather than a page of text to read.</p>
+
+<h3>Hints that name the technique</h3>
+<p>Ask for a hint and the app tells you the region first. Ask again and it names the
+technique and states the rule. Ask again and it shows you the corridor it applies to. Only
+the last step draws the bridge for you, and taking it is a deliberate act.</p>
+
+<h3>Mastery you actually earned</h3>
+<p>Practice drills rehearse one technique at a time. Progress counts only the deductions
+you worked out unaided, so the path reflects what you can really do.</p>
+
+<h2>No guessing, ever</h2>
+<p>Every puzzle has exactly one solution, and every puzzle can be finished by reasoning
+alone. The app proves both before a board ever reaches you. A bridge that would cross
+another simply cannot be drawn, so a mistake is never hidden three moves back.</p>
+
+<h2>What it costs</h2>
+<div class="cols">
+  <div class="card">
+    <h3>Free</h3>
+    <ul>
+      <li>The rules lesson, Full Islands and Only Neighbor</li>
+      <li>Small and medium boards, every difficulty</li>
+      <li>The daily puzzle and its streak, including the larger weekend boards</li>
+      <li>An error check when something has gone wrong</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>One purchase</h3>
+    <ul>
+      <li>Six more lessons</li>
+      <li>Every practice drill</li>
+      <li>Hints that teach instead of answering</li>
+      <li>Large boards</li>
+      <li>Stats and your technique path</li>
+    </ul>
+  </div>
+</div>
+<p>No ads, no subscription, and none of the timers, energy or coins that puzzle apps tend
+to arrive with. Everything works offline.</p>
+
+<h2>Privacy</h2>
+<div class="card">
+  <p style="margin:0">The app collects nothing. No account, no analytics, no advertising.
+  Your progress is stored on your device and never sent anywhere, and apart from the App
+  Store purchase check the app makes no network requests at all.
+  <a href="justhashi-privacy.html">Full privacy policy</a>.</p>
+</div>
+
+<h2>Support</h2>
+
+<h3>I bought the unlock and it is gone</h3>
+<p>Settings, then Restore purchases. It is always available, including when the app already
+thinks it is unlocked. If nothing comes back, check you are signed in with the Apple Account
+that made the purchase.</p>
+
+<h3>Does it work offline?</h3>
+<p>Yes, entirely. Puzzles are generated on your device. The only time the app talks to the
+network is to ask the App Store whether the unlock has been purchased.</p>
+
+<h3>Where is my progress kept?</h3>
+<p>On the device, in the app's own storage. There is no cloud sync, so deleting the app
+deletes your stats, streak and lesson progress.</p>
+
+<h3>This board looks unsolvable</h3>
+<p>It isn't. Every shipped puzzle is checked twice before you see it: once to prove it has
+exactly one solution, and once to prove the app's own techniques can finish it. If you are
+stuck, the hint button will name the technique that applies. If you still think a board is
+wrong, mail me and say which one.</p>
+
+<h3>Something else</h3>
+<p><a href="mailto:kai.kunze@gmail.com">kai.kunze@gmail.com</a>.</p>
+
+<footer>
+  Made by <a href="https://kaikunze.de/">Kai Kunze</a> &middot;
+  <a href="justhashi-privacy.html">Privacy</a> &middot;
+  <a href="https://github.com/kkai/justhashi">Source</a>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  // The rules lesson's board, exactly as TutorialPuzzles.rulesBoard defines it:
+  // a real board the app ships, not a mock-up.
+  var COLS = 5, ROWS = 3, CELL = 88, PAD = 44, R = 26;
+  var islands = [
+    { id: 0, row: 0, col: 0, clue: 2 },
+    { id: 1, row: 0, col: 2, clue: 4 },
+    { id: 2, row: 0, col: 4, clue: 1 },
+    { id: 3, row: 2, col: 2, clue: 1 }
+  ];
+  var edges = [
+    { a: 0, b: 1, need: 2 },
+    { a: 1, b: 2, need: 1 },
+    { a: 1, b: 3, need: 1 }
+  ];
+  var bridges = edges.map(function () { return 0; });
+  var selected = null, solved = false;
+
+  var svg = document.getElementById('board');
+  var note = document.getElementById('note');
+  var NS = 'http://www.w3.org/2000/svg';
+
+  function cx(i) { return PAD + i.col * CELL; }
+  function cy(i) { return PAD + i.row * CELL; }
+  function byId(id) { return islands[id]; }
+  function count(id) {
+    return edges.reduce(function (n, e, k) {
+      return n + ((e.a === id || e.b === id) ? bridges[k] : 0);
+    }, 0);
+  }
+  function edgeBetween(a, b) {
+    for (var k = 0; k < edges.length; k++) {
+      if ((edges[k].a === a && edges[k].b === b) || (edges[k].a === b && edges[k].b === a)) return k;
+    }
+    return -1;
+  }
+  function el(name, attrs) {
+    var n = document.createElementNS(NS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+
+  function draw() {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    // Bridges first, so the discs sit on top and the rails end at the rims.
+    edges.forEach(function (e, k) {
+      if (!bridges[k]) return;
+      var A = byId(e.a), B = byId(e.b);
+      var offs = bridges[k] === 2 ? [-5, 5] : [0];
+      offs.forEach(function (o) {
+        var vert = A.col === B.col;
+        svg.appendChild(el('line', {
+          x1: cx(A) + (vert ? o : 0), y1: cy(A) + (vert ? 0 : o),
+          x2: cx(B) + (vert ? o : 0), y2: cy(B) + (vert ? 0 : o),
+          stroke: 'var(--bridge)', 'stroke-width': 4, 'stroke-linecap': 'round'
+        }));
+      });
+    });
+    islands.forEach(function (i) {
+      var done = count(i.id) === i.clue, over = count(i.id) > i.clue;
+      var g = el('g', { class: 'isl', role: 'button', tabindex: 0 });
+      g.setAttribute('aria-label', 'Island ' + i.clue + ', ' + count(i.id) + ' of ' + i.clue + ' bridges');
+      g.appendChild(el('circle', {
+        cx: cx(i), cy: cy(i), r: R, fill: 'var(--island)',
+        stroke: over ? 'var(--vermillion)' : (done ? 'var(--foam)' : 'var(--rim)'),
+        'stroke-width': selected === i.id ? 4 : 2
+      }));
+      var t = el('text', {
+        x: cx(i), y: cy(i) + 7, 'text-anchor': 'middle',
+        fill: over ? 'var(--vermillion)' : '#131e2b',
+        'font-size': 25, 'font-weight': 700,
+        'font-family': 'ui-rounded, -apple-system, system-ui, sans-serif'
+      });
+      t.textContent = i.clue;
+      g.appendChild(t);
+      g.addEventListener('click', function () { pick(i.id); });
+      g.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); pick(i.id); }
+      });
+      svg.appendChild(g);
+    });
+  }
+
+  function pick(id) {
+    if (solved) return;
+    if (selected === null) { selected = id; say('Now tap the island you want to link it to.'); draw(); return; }
+    if (selected === id) { selected = null; say(''); draw(); return; }
+    var k = edgeBetween(selected, id);
+    if (k < 0) {
+      say('Those two are not in line with each other, so no bridge can run between them.');
+      selected = null; draw(); return;
+    }
+    bridges[k] = (bridges[k] + 1) % 3;
+    selected = null;
+    check();
+    draw();
+  }
+
+  function check() {
+    var all = islands.every(function (i) { return count(i.id) === i.clue; });
+    if (!all) { say(''); return; }
+    // Connected? Walk from the first island over placed bridges.
+    var seen = {}, stack = [islands[0].id];
+    seen[islands[0].id] = true;
+    while (stack.length) {
+      var cur = stack.pop();
+      edges.forEach(function (e, k) {
+        if (!bridges[k]) return;
+        var other = e.a === cur ? e.b : (e.b === cur ? e.a : null);
+        if (other !== null && !seen[other]) { seen[other] = true; stack.push(other); }
+      });
+    }
+    if (Object.keys(seen).length === islands.length) {
+      solved = true;
+      say('Solved. Every island has its number, and they are all connected.');
+    } else {
+      say('Every number is right, but the islands are not all connected yet.');
+    }
+  }
+
+  function say(text) { note.textContent = text || ' '; }
+
+  document.getElementById('reset').addEventListener('click', function () {
+    bridges = edges.map(function () { return 0; });
+    selected = null; solved = false;
+    say('Four islands, one connected world.');
+    draw();
+  });
+
+  draw();
+})();
+</script>
+</body>
+</html>

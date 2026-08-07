@@ -1,0 +1,1 @@
+Islands, numbers, and one connected world. Every board has exactly one solution and can be reasoned out, and the hints name the technique instead of just answering.

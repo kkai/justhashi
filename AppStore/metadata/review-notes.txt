@@ -1,0 +1,28 @@
+No account, no login, no demo credentials needed. Everything works offline and
+all progress is stored on the device.
+
+There is one non-consumable in-app purchase, de.kaikunze.hashi.full, which
+unlocks six of the nine lessons, the practice drills, the escalating hints,
+large boards and the stats screen. Free play covers the rules lesson plus the
+first two techniques, small and medium boards at every difficulty, the daily
+puzzle, and the error check.
+
+Two things that may look inconsistent but are deliberate:
+
+1. Large boards are behind the purchase, yet the daily puzzle serves a large
+   board on Saturdays and Sundays and it is free to play. That is intentional.
+   The daily is exempt from the size gate so that free players get a taste of
+   the larger boards once a week; solving one offers the unlock afterwards.
+
+2. Tapping Large in the size picker bounces the selection back and opens the
+   purchase screen instead of disabling the segment, so the feature stays
+   visible rather than hidden.
+
+Restore purchases is in Settings and is always reachable, including when the
+app already considers itself unlocked. Restoring on an account that owns
+nothing reports "Nothing to restore on this Apple Account" rather than failing
+silently.
+
+The app collects no data of any kind. The privacy manifest declares only
+UserDefaults under reason CA92.1, which matches the "Data Not Collected"
+answers in App Privacy.

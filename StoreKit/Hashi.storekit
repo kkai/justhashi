@@ -1,0 +1,34 @@
+{
+  "identifier" : "C4A7E210",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : true,
+      "internalID" : "9D2B60F4",
+      "localizations" : [
+        {
+          "description" : "Every lesson, every drill, teaching hints, large boards and stats. One purchase, forever.",
+          "displayName" : "Just Hashi Full",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "de.kaikunze.hashi.full",
+      "referenceName" : "Just Hashi Full",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_developerTeamID" : "8H42EZRCCP",
+    "_lastSynchronizedDate" : 0
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

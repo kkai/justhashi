@@ -1,0 +1,19 @@
+Just Hashi teaches you to play Hashi properly, then gets out of the way.
+
+Hashi is a puzzle of islands and bridges. Each island shows a number, and that is exactly how many bridges must touch it. Bridges run straight up, down, left or right, never cross, and at most two join any pair of islands. When you are done, every island has to belong to one connected network. That is the whole rulebook. Getting good at it is another matter, and that is what this app is for.
+
+Nine lessons take you from the rules to the techniques experienced solvers use without thinking: full islands, counting what the other corridors can carry, spotting the bridge that would strand half the board, and chasing a what-if until it breaks. Each one is a short board where the technique is the way through, rather than a page of text to read.
+
+When you get stuck in a real game, the hint button names the technique that applies and shows you which corridor it points at. It will draw the bridge for you if you insist, but that is the last thing it offers rather than the first.
+
+Practice drills let you rehearse one technique at a time. Mastery counts only the deductions you worked out yourself, so the progress path reflects what you can actually do.
+
+Every puzzle has exactly one solution, and every puzzle can be finished by reasoning alone. The app proves both before a board ever reaches you. You are never asked to guess, and a bridge that would cross another simply cannot be drawn.
+
+FREE
+The rules lesson, Full Islands and Only Neighbor. Small and medium boards at every difficulty. The daily puzzle and its streak, including the larger weekend boards. An error check that tells you when something has gone wrong.
+
+ONE PURCHASE UNLOCKS
+Six more lessons. Every practice drill. The hints that teach instead of just answering. Large boards. Your stats and technique path.
+
+No ads, no subscription, and none of the timers, energy or coins that puzzle apps tend to arrive with. Everything works offline.
