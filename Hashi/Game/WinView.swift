@@ -46,7 +46,7 @@ struct WinView: View {
 
                 if let onUnlock {
                     VStack(spacing: 8) {
-                        Text("That was a large board — this week's Daily. Large boards are part of the full game.")
+                        Text("That was a large board, free because it is this week's Daily. Large boards are part of the full game.")
                             .font(.footnote)
                             .foregroundStyle(Theme.inkSoft)
                             .multilineTextAlignment(.center)

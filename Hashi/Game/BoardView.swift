@@ -1,12 +1,16 @@
 import SwiftUI
 
-/// The playing field: sea, bridges as ink strokes, islands as paper discs.
+/// The board: bridges as ink strokes, islands as paper discs.
 ///
 /// Layers, bottom to top:
-/// 1. wave texture (static Canvas — restraint is the brand, so it never moves)
-/// 2. bridge Canvas: corridor glows, placed bridges, the drag ghost
-/// 3. island discs (real views — accessibility elements and animation anchors)
-/// 4. one gesture overlay owning the drag/tap logic
+/// 1. bridge Canvas: corridor glows, placed bridges, the drag ghost
+/// 2. island discs (real views, so they are accessibility elements and
+///    animation anchors)
+/// 3. one gesture overlay owning the drag and tap logic
+///
+/// The water underneath belongs to `SeaBackground`, which covers the whole
+/// screen. This view used to paint its own, which meant the texture stopped
+/// abruptly at the board's square frame.
 ///
 /// Input goes through the `onTapIsland`/`onCycleEdge` callbacks rather than
 /// straight into the game, so a tutorial can intercept moves (a lesson that
@@ -30,11 +34,10 @@ struct BoardView: View {
     var body: some View {
         GeometryReader { proxy in
             let layout = BoardLayout(
-                rows: game.puzzle.rows, cols: game.puzzle.cols,
+                puzzle: game.puzzle,
                 available: proxy.size,
                 cellCap: Metrics.cellCap(regularWidth: horizontalSizeClass == .regular))
             ZStack {
-                WaveTexture(layout: layout)
                 bridgeCanvas(layout)
                 islands(layout)
             }
@@ -134,8 +137,10 @@ struct BoardView: View {
 
     private func entranceDelay(_ island: Island, layout: BoardLayout) -> TimeInterval {
         guard !reduceMotion else { return 0 }
-        let centerRow = Double(game.puzzle.rows) / 2
-        let centerCol = Double(game.puzzle.cols) / 2
+        // Measured against the laid-out box, not the puzzle's grid, so the
+        // wave still starts where the board visually centres.
+        let centerRow = Double(layout.firstRow) + Double(layout.rows) / 2
+        let centerCol = Double(layout.firstCol) + Double(layout.cols) / 2
         let distance = abs(Double(island.position.row) - centerRow)
             + abs(Double(island.position.col) - centerCol)
         return distance * Motion.boardEntranceStagger
@@ -302,37 +307,8 @@ private struct IslandView: View {
     }
 
     private var accessibilityValue: String {
-        if overfilled { return "\(count) bridges — too many" }
+        if overfilled { return "\(count) bridges, which is too many" }
         if satisfied { return "complete" }
         return "\(count) of \(island.clue) bridges"
-    }
-}
-
-/// Sparse hairline wave-dashes on the sea. Static by design.
-private struct WaveTexture: View {
-    let layout: BoardLayout
-
-    var body: some View {
-        Canvas { context, size in
-            let spacing: CGFloat = 56
-            let dash: CGFloat = 14
-            var row = 0
-            var y: CGFloat = spacing * 0.6
-            while y < size.height {
-                let phase: CGFloat = row % 2 == 0 ? 0 : spacing / 2
-                var x: CGFloat = phase
-                while x < size.width {
-                    var path = Path()
-                    path.move(to: CGPoint(x: x, y: y))
-                    path.addQuadCurve(to: CGPoint(x: x + dash, y: y),
-                                      control: CGPoint(x: x + dash / 2, y: y - 3))
-                    context.stroke(path, with: .color(Theme.hairline), lineWidth: 1)
-                    x += spacing
-                }
-                y += spacing
-                row += 1
-            }
-        }
-        .allowsHitTesting(false)
     }
 }

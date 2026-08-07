@@ -42,7 +42,7 @@ struct GameView: View {
 
     var body: some View {
         ZStack {
-            Theme.sea.ignoresSafeArea()
+            SeaBackground(waves: true)
             VStack(spacing: 0) {
                 header
                 Spacer(minLength: 0)
@@ -61,6 +61,7 @@ struct GameView: View {
             }
         }
         .navigationTitleDisplay(.inline)
+        .swipeBackDisabled()
         .toolbar {
             ToolbarItem(placement: .primaryTrailing) {
                 HStack(spacing: 2) {

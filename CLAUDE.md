@@ -46,3 +46,10 @@ swiftc -O -o bench Hashi/Engine/*.swift bench/main.swift && ./bench
 ## Conventions
 
 Swift 6, Swift Testing (`@Suite`/`@Test`/`#expect`) in `HashiTests` hosted by the app. `struct` over `class`, classes `final`, no force unwraps. Team `8H42EZRCCP`, bundle `de.kaikunze.hashi`, display name "Just Hashi".
+
+## Shipping
+
+`AppStore/SUBMISSION.md` is the submission runbook: ASC ids, what is already
+done, what is left, and the traps specific to this record. Read it before any
+release. Regenerate assets with `AppStore/capture_screenshots.py`,
+`AppStore/iap/generate.py` and `tools/icon/generate_appicon.py`.

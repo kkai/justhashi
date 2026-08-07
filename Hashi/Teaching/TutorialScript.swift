@@ -18,9 +18,11 @@ enum TutorialStep: Equatable {
 struct TutorialLesson: Identifiable {
     let id: String
     /// nil for Lesson 0 (the rules); otherwise the technique taught.
+    ///
+    /// The lesson's title and one-line summary deliberately live in
+    /// `TechniqueContent`, not here: the menu and the lesson screen both read
+    /// them from there, so a second copy on this type could only drift.
     let technique: Technique?
-    let title: String
-    let summary: String
     let puzzle: HashiPuzzle
     let steps: [TutorialStep]
 }

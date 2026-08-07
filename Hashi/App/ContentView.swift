@@ -114,7 +114,7 @@ struct ResumeGameView: View {
 
     var body: some View {
         ZStack {
-            Theme.sea.ignoresSafeArea()
+            SeaBackground()
             if let game {
                 GameHostView(game: game)
             } else if resolved {

@@ -12,7 +12,7 @@ struct LearnMenuView: View {
 
     var body: some View {
         ZStack {
-            Theme.sea.ignoresSafeArea()
+            SeaBackground()
             ScrollView {
                 VStack(spacing: 12) {
                     lessonRow(technique: nil)
@@ -55,7 +55,7 @@ struct LearnMenuView: View {
                         .font(.body.weight(.medium))
                         .foregroundStyle(Theme.ink)
                     Text(technique.map { TechniqueContent.summary(for: $0) }
-                         ?? "The rules, in one friendly board.")
+                         ?? "The rules, on one small board.")
                         .font(.footnote)
                         .foregroundStyle(Theme.inkSoft)
                         .multilineTextAlignment(.leading)
@@ -125,7 +125,7 @@ struct PracticeMenuView: View {
 
     var body: some View {
         ZStack {
-            Theme.sea.ignoresSafeArea()
+            SeaBackground()
             ScrollView {
                 VStack(spacing: 12) {
                     ForEach(Technique.allCases) { technique in
@@ -206,7 +206,7 @@ struct TutorialView: View {
 
     var body: some View {
         ZStack {
-            Theme.sea.ignoresSafeArea()
+            SeaBackground(waves: true)
             if let engine {
                 TutorialContent(engine: engine) {
                     if let technique = engine.lesson.technique {
@@ -218,6 +218,7 @@ struct TutorialView: View {
         }
         .navigationTitle(TechniqueContent.lessonTitle(for: technique))
         .navigationTitleDisplay(.inline)
+        .swipeBackDisabled()
         .onAppear {
             guard engine == nil else { return }
             engine = TutorialEngine(lesson: TutorialPuzzles.lesson(for: technique))
@@ -316,7 +317,7 @@ struct PracticeView: View {
 
     var body: some View {
         ZStack {
-            Theme.sea.ignoresSafeArea()
+            SeaBackground(waves: true)
             if !entitlements.isUnlocked {
                 LockedFeatureView(feature: .practiceDrills)
             } else if let game {
@@ -352,6 +353,7 @@ struct PracticeView: View {
         }
         .navigationTitle(technique.displayName)
         .navigationTitleDisplay(.inline)
+        .swipeBackDisabled()
         .toolbar {
             ToolbarItem(placement: .primaryTrailing) {
                 Button {

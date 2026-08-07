@@ -9,7 +9,7 @@ struct PuzzleLoadingView: View {
 
     var body: some View {
         ZStack {
-            Theme.sea.ignoresSafeArea()
+            SeaBackground()
             VStack(spacing: 20) {
                 TimelineView(.periodic(from: startedAt, by: 0.1)) { context in
                     // Only surface progress UI if loading is actually slow.

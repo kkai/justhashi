@@ -54,24 +54,23 @@ nonisolated enum TutorialPuzzles {
         let p = rulesBoard
         return TutorialLesson(
             id: "rules", technique: nil,
-            title: "How Hashi Works",
-            summary: "Bridges, doubles, and one connected world.",
+
             puzzle: p,
             steps: [
-                .say("Hashi is played on islands. Each number says exactly how many bridges touch that island — no more, no fewer."),
+                .say("Hashi is played on islands. The number on an island says exactly how many bridges touch it, no more and no fewer."),
                 .sayHighlighting("Bridges run along these corridors: straight lines, up-down or left-right, never diagonal.",
                                  islands: [0, 1], edges: [edge(p, 0, 1)]),
                 .requireBridge("Drag from the 2 toward the 4 to draw your first bridge.",
                                edge: edge(p, 0, 1), count: 1),
                 .requireBridge("A corridor can carry a second bridge. Drag the same way again to make it a double.",
                                edge: edge(p, 0, 1), count: 2),
-                .say("That double finishes the 2 — its ring is full. Watch the rings: they show how much each island still needs."),
+                .say("That double finishes the 2, and its ring closes. The rings are worth watching: each one shows how much its island still needs."),
                 .requireBridge("The 1 on the right needs a single bridge. Connect it to the 4.",
                                edge: edge(p, 1, 2), count: 1),
                 .requireBridge("One more: link the 4 down to the last island.",
                                edge: edge(p, 1, 3), count: 1),
-                .say("Two more rules and you know everything. Bridges may never cross each other — the app simply won't draw an illegal one."),
-                .celebrate("And every island must join one connected network — no separate groups. That's Hashi. Let's learn to solve it well."),
+                .say("Two more rules and you know the game. Bridges may never cross each other, and the app will not draw one that would."),
+                .celebrate("And every island has to end up in the same connected network, with no group left on its own. That is the whole game. Now to solve it properly."),
             ]
         )
     }
@@ -99,17 +98,16 @@ nonisolated enum TutorialPuzzles {
         let p = fullIslandBoard
         return TutorialLesson(
             id: "fullIsland", technique: .fullIsland,
-            title: "Full Islands",
-            summary: "4 in a corner, 6 on an edge, 8 in the middle: no choices at all.",
+
             puzzle: p,
             steps: [
-                .sayHighlighting("This 4 sits in a corner. It has exactly two corridors — and 4 is two bridges in each. There is nothing to decide.",
+                .sayHighlighting("This 4 sits in a corner, so it has exactly two corridors, and 4 is two bridges in each. There is nothing to decide.",
                                  islands: [0], edges: [edge(p, 0, 1), edge(p, 0, 2)]),
                 .requireBridge("Give the top corridor its double.", edge: edge(p, 0, 1), count: 2),
                 .requireBridge("And the left corridor too.", edge: edge(p, 0, 2), count: 2),
-                .say("A corner 4, an edge 6, a middle 8 — whenever the number equals two bridges to every neighbor, fill everything. Free moves."),
+                .say("A corner 4, an edge 6, a middle 8. Whenever the number equals two bridges to every neighbor, you can fill everything without working anything out."),
                 .solveFreely("Every island here is full. Finish the board."),
-                .celebrate("Full Islands: the fastest opening in Hashi. Scan for them first, every game."),
+                .celebrate("That is the fastest opening in Hashi. Scan for full islands first, every game."),
             ]
         )
     }
@@ -130,8 +128,7 @@ nonisolated enum TutorialPuzzles {
         let p = onlyNeighborBoard
         return TutorialLesson(
             id: "onlyNeighbor", technique: .onlyNeighbor,
-            title: "Only Neighbor",
-            summary: "One way out means every bridge goes that way.",
+
             puzzle: p,
             steps: [
                 .sayHighlighting("This 1 has a single neighbor. Wherever its bridge goes, there's only one place it can go.",
@@ -141,7 +138,7 @@ nonisolated enum TutorialPuzzles {
                                  islands: [1], edges: [edge(p, 1, 2)]),
                 .requireBridge("Draw the double.", edge: edge(p, 1, 2), count: 2),
                 .solveFreely("Finish the chain."),
-                .celebrate("Only Neighbor: when there's one road, take it — with everything you've got."),
+                .celebrate("When an island has one road out, everything it needs goes down that road."),
             ]
         )
     }
@@ -168,17 +165,16 @@ nonisolated enum TutorialPuzzles {
         let p = oneEachWayBoard
         return TutorialLesson(
             id: "oneEachWay", technique: .oneEachWay,
-            title: "One Each Way",
-            summary: "One short of full still pins every direction.",
+
             puzzle: p,
             steps: [
-                .sayHighlighting("This corner 3 could hold at most 4 — a double each way. Three is one short of that. So each corridor carries at least one; only where the double goes is open.",
+                .sayHighlighting("This corner 3 could hold at most 4, a double each way. Three is one short of that, so each corridor carries at least one bridge. Only the question of where the double goes is still open.",
                                  islands: [0], edges: [edge(p, 0, 1), edge(p, 0, 3)]),
                 .requireBridge("Place the guaranteed bridge toward the 2.", edge: edge(p, 0, 1), count: 1),
                 .requireBridge("And the guaranteed bridge going down.", edge: edge(p, 0, 3), count: 1),
                 .say("The same idea works for a 5 on an edge and a 7 in the middle: one short of full means at least one bridge in every direction."),
                 .solveFreely("Use what you know to finish the board."),
-                .celebrate("One Each Way: partial certainty is still certainty. Bank the guaranteed bridges early."),
+                .celebrate("Knowing part of the answer still counts. Bank the guaranteed bridges early and the rest gets easier."),
             ]
         )
     }
@@ -198,17 +194,16 @@ nonisolated enum TutorialPuzzles {
         let p = capacityBoard
         return TutorialLesson(
             id: "capacityCount", technique: .capacityCount,
-            title: "Counting",
-            summary: "What the other corridors can't carry, this one must.",
+
             puzzle: p,
             steps: [
-                .sayHighlighting("The middle island needs 3. Its left neighbor is a 1 — that corridor can never carry more than one bridge.",
+                .sayHighlighting("The middle island needs 3. Its left neighbor is a 1, so that corridor can never carry more than one bridge.",
                                  islands: [1, 0], edges: [edge(p, 0, 1)]),
                 .sayHighlighting("Count: 3 needed, at most 1 from the left. At least 2 must go right. The double is forced before you know anything else.",
                                  islands: [1, 2], edges: [edge(p, 1, 2)]),
                 .requireBridge("Draw the forced double.", edge: edge(p, 1, 2), count: 2),
                 .solveFreely("Finish the row."),
-                .celebrate("Counting: add up what the other corridors could carry. The shortfall belongs to the one that's left."),
+                .celebrate("Add up what the other corridors could carry. Whatever is missing belongs to the one that is left."),
             ]
         )
     }
@@ -233,17 +228,16 @@ nonisolated enum TutorialPuzzles {
         let p = isolationBoard
         return TutorialLesson(
             id: "isolationGuard", technique: .isolationGuard,
-            title: "Don't Cut Off",
-            summary: "A finished little group is a stranded one.",
+
             puzzle: p,
             steps: [
-                .sayHighlighting("Two 1s, side by side. A single bridge between them would satisfy both — tempting.",
+                .sayHighlighting("Two 1s, side by side. A single bridge between them would satisfy both at once.",
                                  islands: [0, 1], edges: [edge(p, 0, 1)]),
-                .say("But finished islands take no more bridges. Those two would be sealed off — an island pair adrift, cut off from everything else. The rule says one connected world, so that bridge is never right."),
+                .say("But a finished island takes no more bridges, so those two would be sealed off with nothing joining them to the rest. Every island has to end up in one network, which makes that bridge wrong every time."),
                 .requireBridge("Send the left 1 downward instead.", edge: edge(p, 0, 2), count: 1),
                 .requireBridge("And the right 1 down too.", edge: edge(p, 1, 3), count: 1),
                 .solveFreely("Connect what remains."),
-                .celebrate("Don't Cut Off: before completing a small group, ask who gets left outside. 1–1 and 2–2 pairs are the classic traps."),
+                .celebrate("Before completing a small group, ask who gets left outside it. A 1 beside a 1, or a 2 beside a 2, is where this usually bites."),
             ]
         )
     }
@@ -269,19 +263,18 @@ nonisolated enum TutorialPuzzles {
         let p = segmentBoard
         return TutorialLesson(
             id: "segmentLink", technique: .segmentLink,
-            title: "Stay Connected",
-            summary: "A group with one way out must use it.",
+
             puzzle: p,
             steps: [
-                .sayHighlighting("Suppose the top pair were joined by a double — both 2s full. The bottom islands could still pair up below… and the board would split in two.",
+                .sayHighlighting("Suppose the top pair were joined by a double, filling both 2s. The bottom islands could still pair up below, and the board would fall into two halves that never meet.",
                                  islands: [0, 1], edges: [edge(p, 0, 1)]),
                 .say("Whenever a group of joined islands is down to one corridor that reaches the outside, that corridor must carry a bridge. A group that spends its last exit on itself is stranded."),
-                .requireBridge("Join the top islands with a single bridge — they'll each keep one corridor free.",
+                .requireBridge("Join the top islands with a single bridge, so each of them keeps a corridor free.",
                                edge: edge(p, 0, 1), count: 1),
                 .requireBridge("Now spend the left 2's last bridge on its way out, down to the 1.",
                                edge: edge(p, 0, 2), count: 1),
-                .solveFreely("Finish the board — keep everyone connected."),
-                .celebrate("Stay Connected: watch each group's exits. When only one remains, it's not optional."),
+                .solveFreely("Finish the board, keeping everyone connected."),
+                .celebrate("Watch how many exits each group has left. When it is down to one, that corridor is not optional."),
             ]
         )
     }
@@ -307,16 +300,15 @@ nonisolated enum TutorialPuzzles {
         let p = whatIfBoard
         return TutorialLesson(
             id: "oneStepContradiction", technique: .oneStepContradiction,
-            title: "What If",
-            summary: "Suppose a bridge. If the board breaks, it isn't there.",
+
             puzzle: p,
             steps: [
-                .sayHighlighting("Four 2s in a ring. Nothing is forced by counting alone — so suppose something. What if the top corridor held a double?",
+                .sayHighlighting("Four 2s in a ring, and counting alone forces nothing. So suppose something instead. What if the top corridor held a double?",
                                  islands: [0, 1], edges: [edge(p, 0, 1)]),
-                .say("Then both top 2s would be full — and sealed off from the bottom pair. Broken board. So the supposition is wrong: the top corridor holds at most one bridge. Every corridor here reasons the same way."),
+                .say("Then both top 2s would be full and sealed off from the bottom pair, which breaks the board. So the supposition is wrong and the top corridor holds at most one bridge. Every corridor here works out the same way."),
                 .requireBridge("Place a single on the top corridor.", edge: edge(p, 0, 1), count: 1),
                 .solveFreely("Each corridor carries exactly one. Close the ring."),
-                .celebrate("What If: a supposition you can refute is knowledge you can keep. One step is often all it takes."),
+                .celebrate("A supposition you can disprove is knowledge you get to keep, and one step of it is usually enough."),
             ]
         )
     }
@@ -347,18 +339,17 @@ nonisolated enum TutorialPuzzles {
         let p = deepWaterBoard
         return TutorialLesson(
             id: "deepContradiction", technique: .deepContradiction,
-            title: "Deep Water",
-            summary: "Chase the what-if further down.",
+
             puzzle: p,
             steps: [
-                .sayHighlighting("Look at the long middle corridor. Suppose it held a bridge — nothing breaks immediately. Chase it.",
+                .sayHighlighting("Look at the long middle corridor. Suppose it held a bridge. Nothing breaks straight away, so chase it further.",
                                  islands: [3, 4], edges: [edge(p, 3, 4)]),
-                .sayHighlighting("A bridge there would cross the corridor down to this 1 — the only corridor that lonely island has. Two steps in, the board breaks: that 1 could never be reached.",
+                .sayHighlighting("A bridge there would cross the corridor running down to this 1, which is the only corridor that island has. Two steps in the board breaks, because nothing could ever reach that 1.",
                                  islands: [5], edges: [edge(p, 1, 5)]),
                 .requireBridge("So the middle stays empty, and the 1's lifeline is certain. Draw it.",
                                edge: edge(p, 1, 5), count: 1),
                 .solveFreely("The rest follows. Finish the board."),
-                .celebrate("Deep Water: when one step doesn't break the board, follow the forced moves further. The hardest puzzles live down here."),
+                .celebrate("When one step does not break the board, follow the forced moves further out. This is where the hardest puzzles are won."),
             ]
         )
     }

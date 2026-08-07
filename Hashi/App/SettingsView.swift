@@ -76,7 +76,7 @@ struct SettingsView: View {
         default:
             entitlements.isUnlocked
                 ? "The full game is unlocked on this Apple Account."
-                : "One purchase unlocks every lesson, every drill, teaching hints, large boards and stats. Already bought it? Restore brings it back on this device."
+                : "One purchase unlocks every lesson, every drill, the teaching hints, large boards and stats. Already bought it? Restore brings it back on this device."
         }
     }
 }

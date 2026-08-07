@@ -25,11 +25,11 @@ nonisolated enum PaidFeature: String, CaseIterable, Sendable, Identifiable {
         case .advancedLessons:
             "Six more lessons: One Each Way, Counting, Don't Cut Off, Stay Connected, What If and Deep Water."
         case .practiceDrills:
-            "Targeted drills for every technique, with mastery tracking that knows what you've actually earned unaided."
+            "A drill for every technique, and progress that only counts the deductions you made without help."
         case .teachingHints:
             "A hint that names the technique and shows you which corridor it applies to, instead of drawing the bridge for you."
         case .largeBoards:
-            "The 13×13 puzzles, where counting and connectivity start to bite. Free every weekend in the Daily."
+            "The 13 by 13 puzzles, where counting and connectivity get much harder. The weekend Daily is one of these, and it stays free."
         case .stats:
             "Best times, solve counts and your mastery path across all eight techniques."
         }

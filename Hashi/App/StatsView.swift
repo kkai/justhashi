@@ -9,7 +9,7 @@ struct StatsView: View {
 
     var body: some View {
         ZStack {
-            Theme.sea.ignoresSafeArea()
+            SeaBackground()
             ScrollView {
                 // The panels are gated, not the screen. The daily streak
                 // belongs to the free Daily, so locking everything would hide

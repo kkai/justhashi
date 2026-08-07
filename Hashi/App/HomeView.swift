@@ -17,7 +17,7 @@ struct HomeView: View {
 
     var body: some View {
         ZStack {
-            Theme.sea.ignoresSafeArea()
+            SeaBackground()
             // The content is short; on a large screen it centres rather than
             // clinging to the top, and still scrolls when Dynamic Type grows it
             // past the screen.

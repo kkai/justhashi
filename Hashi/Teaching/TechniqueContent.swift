@@ -15,7 +15,7 @@ nonisolated enum TechniqueContent {
         case .oneEachWay:
             "One short of full: at least one bridge in every direction."
         case .capacityCount:
-            "Count what the other corridors can still carry — the rest is forced."
+            "Count what the other corridors can still carry. The rest is forced."
         case .isolationGuard:
             "Never finish a small group that would cut itself off."
         case .segmentLink:
@@ -23,7 +23,7 @@ nonisolated enum TechniqueContent {
         case .oneStepContradiction:
             "Suppose a bridge is there. If that breaks the board, it isn't."
         case .deepContradiction:
-            "Chase a what-if two steps before it breaks. Deep water."
+            "Chase a what-if two steps before the board breaks."
         }
     }
 
@@ -31,19 +31,19 @@ nonisolated enum TechniqueContent {
     static func rule(for technique: Technique) -> String {
         switch technique {
         case .fullIsland:
-            "Full Islands: a 4 in a corner, a 6 on an edge, an 8 in the middle — the number equals two bridges to every neighbor, so every corridor gets a double. No choices to make."
+            "Full Islands: a 4 in a corner, a 6 on an edge, an 8 in the middle. The number equals two bridges to every neighbor, so every corridor gets a double and there is nothing to choose."
         case .onlyNeighbor:
             "Only Neighbor: when an island has a single usable corridor, all of its bridges must use it."
         case .oneEachWay:
-            "One Each Way: a 3 in a corner, a 5 on an edge, a 7 in the middle is one short of full — every direction carries at least one bridge, even before you know which gets the double."
+            "One Each Way: a 3 in a corner, a 5 on an edge, a 7 in the middle is one short of full. Every direction carries at least one bridge, even before you know which gets the double."
         case .capacityCount:
             "Counting: add up the most the other corridors could carry. Whatever the number still needs beyond that must go through the corridor that's left."
         case .isolationGuard:
-            "Don't Cut Off: every island must reach every other. A bridge that completes a little group — like a 1 to a 1 — seals it off from the rest, so that bridge is never right."
+            "Don't Cut Off: every island must reach every other. A bridge that completes a small group, like a 1 joined to a 1, seals it off from the rest, so that bridge is never right."
         case .segmentLink:
-            "Stay Connected: when a group of joined islands has exactly one corridor left to the outside, that corridor must carry a bridge — it's the group's only way to reach everyone else."
+            "Stay Connected: when a group of joined islands has exactly one corridor left to the outside, that corridor must carry a bridge. It is the group's only way to reach everyone else."
         case .oneStepContradiction:
-            "What If: suppose a corridor holds a bridge, and check what follows. If an island overfills or a group seals itself off, the supposition was wrong — and now you know."
+            "What If: suppose a corridor holds a bridge, and check what follows. If an island overfills or a group seals itself off, the supposition was wrong, and now you know something you did not before."
         case .deepContradiction:
             "Deep Water: the same what-if, chased further. Follow the forced moves two steps; if the board breaks anywhere down the line, the first supposition was wrong."
         }
@@ -53,7 +53,7 @@ nonisolated enum TechniqueContent {
     static func nudge(for step: TechniqueApplication, puzzle: HashiPuzzle) -> String {
         switch step.technique {
         case .fullIsland:
-            "One island here can take no choices at all — its number fills every corridor it has."
+            "One island here has no choice left. Its number fills every corridor it has."
         case .onlyNeighbor:
             "An island has only one place left to send its bridges."
         case .oneEachWay:
@@ -61,7 +61,7 @@ nonisolated enum TechniqueContent {
         case .capacityCount:
             "Count what one island's other corridors could still carry."
         case .isolationGuard:
-            "Careful — one tempting bridge here would strand part of the board."
+            "Careful. One tempting bridge here would strand part of the board."
         case .segmentLink:
             "A connected group is running out of ways to reach the rest."
         case .oneStepContradiction, .deepContradiction:
@@ -77,19 +77,19 @@ nonisolated enum TechniqueContent {
             let neighbors = step.explanation.neighborCount
             return neighbors == 1
                 ? "This \(clue) has a single neighbor, and \(clue) is a full double bridge. Fill the corridor."
-                : "This \(clue) has exactly \(neighbors) neighbors — \(clue) is two bridges to each of them. Fill every corridor with a double."
+                : "This \(clue) has exactly \(neighbors) neighbors, and \(clue) is two bridges to each of them. Fill every corridor with a double."
         case .onlyNeighbor:
             return "The highlighted island has one open corridor. Everything it still needs goes there."
         case .oneEachWay:
-            return "This \(clue) is one bridge short of filling every corridor. Each direction gets at least one — only the double is still open."
+            return "This \(clue) is one bridge short of filling every corridor. Each direction gets at least one, and only the double is still open."
         case .capacityCount:
             return "This \(clue)'s other corridors can't carry enough on their own. The highlighted corridor has to make up the difference."
         case .isolationGuard:
-            return "Completing the highlighted corridor would satisfy this little group entirely — and seal it off from everything else. Cap it lower."
+            return "Completing the highlighted corridor would satisfy this small group entirely, and seal it off from everything else. Cap it lower."
         case .segmentLink:
             return "The highlighted group has exactly one corridor to the outside. It must carry a bridge."
         case .oneStepContradiction, .deepContradiction:
-            return "Suppose the highlighted corridor changed. Follow the forced moves — an island breaks. So it can't."
+            return "Suppose the highlighted corridor changed. Follow the forced moves and an island breaks, so it cannot."
         }
     }
 
@@ -97,7 +97,7 @@ nonisolated enum TechniqueContent {
     static func resolution(for step: TechniqueApplication, puzzle: HashiPuzzle) -> String {
         let placements = step.boundChanges.filter { $0.newMin > 0 }
         if placements.isEmpty {
-            return "This corridor can now be ruled out. Play on with that knowledge."
+            return "This corridor can now be ruled out."
         }
         let described = placements.prefix(2).map { change in
             let edge = puzzle.edges[change.edge]
@@ -106,7 +106,7 @@ nonisolated enum TechniqueContent {
             let count = change.newMin == 2 ? "a double bridge" : "a bridge"
             return "\(count) between the \(a.clue) and the \(b.clue)"
         }
-        return "Draw " + described.joined(separator: ", and ") + ". Tap Apply and it's done."
+        return "Draw " + described.joined(separator: ", and ") + "."
     }
 
     /// Lesson titles, curriculum order.

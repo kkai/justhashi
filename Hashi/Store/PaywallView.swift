@@ -156,7 +156,7 @@ struct LockedFeatureView: View {
 
     var body: some View {
         ZStack {
-            Theme.sea.ignoresSafeArea()
+            SeaBackground()
             LockedFeaturePanel(feature: feature)
                 .padding(32)
         }

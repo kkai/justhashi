@@ -54,9 +54,18 @@ nonisolated enum Theme {
 
     // MARK: - Colors (light / dark pairs)
 
-    /// The field: pale sea-mist by day, night sea after dark.
+    /// The field as a flat colour: cards, sheet backgrounds, anywhere a
+    /// gradient would fight the content sitting on it. Full-screen backgrounds
+    /// use `SeaBackground` instead, which has depth.
     static let sea = dynamic(light: ThemeRGBA(red: 0.918, green: 0.937, blue: 0.945, alpha: 1),
                              dark: ThemeRGBA(red: 0.043, green: 0.075, blue: 0.114, alpha: 1))
+    /// Top of the sea gradient: light coming off the surface near the horizon.
+    static let seaShallow = dynamic(light: ThemeRGBA(red: 0.933, green: 0.953, blue: 0.961, alpha: 1),
+                                    dark: ThemeRGBA(red: 0.055, green: 0.102, blue: 0.157, alpha: 1))
+    /// Bottom of it: the water nearest you, and the darkest part of the field.
+    /// `sea` sits between the two, so nothing else in the palette shifts.
+    static let seaDeep = dynamic(light: ThemeRGBA(red: 0.867, green: 0.902, blue: 0.918, alpha: 1),
+                                 dark: ThemeRGBA(red: 0.024, green: 0.043, blue: 0.071, alpha: 1))
     /// Cards and sheets.
     static let surface = dynamic(light: .white,
                                  dark: ThemeRGBA(red: 0.106, green: 0.153, blue: 0.208, alpha: 1))

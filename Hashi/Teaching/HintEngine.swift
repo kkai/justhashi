@@ -54,7 +54,7 @@ struct HintEngine {
         guard let chain = LogicalSolver.hintChain(puzzle: game.puzzle, board: game.board) else {
             return Hint(level: .nudge,
                         application: TechniqueApplication(technique: .fullIsland),
-                        text: "Everything on the board checks out. Keep going.",
+                        text: "Everything on the board checks out so far.",
                         highlightIslands: [], highlightEdges: [], isErrorHint: false)
         }
         let step = chain.placing
@@ -65,8 +65,8 @@ struct HintEngine {
             // technique — that is the thing being sold.
             return Hint(level: .nudge,
                         application: step,
-                        text: "There's a move available on this board. Teaching hints name the "
-                            + "technique and show you where it applies. They're part of the full game.",
+                        text: "There is a move available on this board. Teaching hints name the "
+                            + "technique and show you where it applies. They come with the full game.",
                         highlightIslands: [], highlightEdges: [],
                         isErrorHint: false, isLocked: true)
         }
@@ -118,9 +118,9 @@ struct HintEngine {
         let text: String
         switch level {
         case .nudge, .technique:
-            text = "One of the bridges around here doesn't belong. Check these islands before going further."
+            text = "One of the bridges around here does not belong. Check these islands before going further."
         case .highlight:
-            text = "One of the highlighted corridors carries too much. Something has to come off."
+            text = "One of the highlighted corridors is carrying too much. Something has to come off."
         case .resolution:
             text = "This corridor carries more bridges than the solution allows. Tap it until it clears."
         }
