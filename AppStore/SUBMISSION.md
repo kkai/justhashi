@@ -87,7 +87,7 @@ python3 AppStore/iap/generate.py
 python3 tools/icon/generate_appicon.py
 
 # Metadata and screenshots to ASC (--platform IOS is not optional here)
-cd ../appstoreconnect/appship
+cd ../../studio/appstoreconnect/appship
 .build/release/AppShip metadata --bundle-id de.kaikunze.hashi \
   --create-version 1.0 --locale en-US --platform IOS \
   --description-file … --promo-file … --keywords-file …

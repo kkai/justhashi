@@ -178,7 +178,7 @@ fails if there are none, so the test cannot go vacuous if the schedule changes.
 
 ## Simulator driving
 
-Same fb-idb setup as Kakuro (`../kakuro/venv`). Drive from a single Python
+Same fb-idb setup as Kakuro (`../../studio/idb-venv`). Drive from a single Python
 process; find elements via the accessibility tree (islands expose
 "Island N, row R, column C" + bridge-count values); read the app's own save
 (`hashi.saveGame.v1` via plistlib+json) to learn a live board's solution.
