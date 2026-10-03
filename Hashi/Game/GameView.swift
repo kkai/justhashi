@@ -104,7 +104,8 @@ struct GameView: View {
                     onDismiss: {
                         withAnimation(Motion.overlay) { self.hint = nil }
                     },
-                    onUnlock: { paywall.present(.teachingHints) }
+                    onUnlock: { paywall.present(.teachingHints) },
+                    puzzle: game.puzzle
                 )
             }
         }
@@ -163,9 +164,9 @@ struct GameView: View {
     private var header: some View {
         HStack {
             Text(TimeFormatting.clock(game.elapsed))
-                .font(Theme.numberFont(size: 17))
+                .numberFont(17)
                 .foregroundStyle(Theme.inkSoft)
-                .accessibilityLabel("Time \(TimeFormatting.clock(game.elapsed))")
+                .accessibilityLabel("Time \(TimeFormatting.spoken(game.elapsed))")
             Spacer()
             // Size first, then difficulty — the same order the Daily card and
             // Stats use. Difficulty is the *requested* band, matching records.
@@ -233,6 +234,12 @@ struct GameView: View {
                                           difficulty: game.difficultyForRecords,
                                           time: time)
         Haptics.win()
+        let spoken = "Solved in \(TimeFormatting.spoken(time))" + (wasNewBest ? ", a new best time." : ".")
+        Task {
+            // After the win card takes focus, or its arrival cuts this off.
+            try? await Task.sleep(for: .seconds(1.2))
+            BoardSpeech.announce(spoken)
+        }
         let origin = game.lastMoveIsland ?? 0
         let distances = game.rippleDistances(from: origin)
         rippleDistances = distances

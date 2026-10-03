@@ -6,7 +6,18 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		37EC3AC2EA909EC4ECBC7B34 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A59FCA89E8E434A89F0CE6C1 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
+		0E55C51D4D76757C3830470F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7AC24A522E35D8C000111972 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7AC24A592E35D8C000111972;
+			remoteInfo = Hashi;
+		};
 		2A05798B30268A2100FA10FF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7AC24A522E35D8C000111972 /* Project object */;
@@ -17,24 +28,45 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		334DA8D4C38521BE5CFAC2C7 /* HashiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HashiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AC24A5A2E35D8C000111972 /* Hashi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hashi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AC24A802E35D8C300111972 /* HashiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HashiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A59FCA89E8E434A89F0CE6C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7AC24A5C2E35D8C000111972 /* Hashi */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = Hashi;
 			sourceTree = "<group>";
 		};
 		7AC24A892E35D8C300111972 /* HashiTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = HashiTests;
+			sourceTree = "<group>";
+		};
+		92E37C5C255C5CA01355F512 /* HashiUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = HashiUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		29B92B464569A57778932B82 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37EC3AC2EA909EC4ECBC7B34 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7AC24A572E35D8C000111972 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -58,6 +90,8 @@
 				7AC24A5C2E35D8C000111972 /* Hashi */,
 				7AC24A892E35D8C300111972 /* HashiTests */,
 				7AC24A5B2E35D8C000111972 /* Products */,
+				936544104EF5D4FDC4CE1B96 /* Frameworks */,
+				92E37C5C255C5CA01355F512 /* HashiUITests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,8 +100,25 @@
 			children = (
 				7AC24A5A2E35D8C000111972 /* Hashi.app */,
 				7AC24A802E35D8C300111972 /* HashiTests.xctest */,
+				334DA8D4C38521BE5CFAC2C7 /* HashiUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		936544104EF5D4FDC4CE1B96 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BF3AB4A04F62F1C599003BA5 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BF3AB4A04F62F1C599003BA5 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A59FCA89E8E434A89F0CE6C1 /* Foundation.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -89,8 +140,6 @@
 				7AC24A5C2E35D8C000111972 /* Hashi */,
 			);
 			name = Hashi;
-			packageProductDependencies = (
-			);
 			productName = Hashi;
 			productReference = 7AC24A5A2E35D8C000111972 /* Hashi.app */;
 			productType = "com.apple.product-type.application";
@@ -112,11 +161,30 @@
 				7AC24A892E35D8C300111972 /* HashiTests */,
 			);
 			name = HashiTests;
-			packageProductDependencies = (
-			);
 			productName = HashiTests;
 			productReference = 7AC24A802E35D8C300111972 /* HashiTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CDD40DEAD71E6802DFC86B95 /* HashiUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2770AB5B305320AF5E4D489C /* Build configuration list for PBXNativeTarget "HashiUITests" */;
+			buildPhases = (
+				386BB933773A53FBFE777429 /* Sources */,
+				29B92B464569A57778932B82 /* Frameworks */,
+				E02632DDEA545618936251F3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA13B2CD9886E575C502905D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				92E37C5C255C5CA01355F512 /* HashiUITests */,
+			);
+			name = HashiUITests;
+			productName = HashiUITests;
+			productReference = 334DA8D4C38521BE5CFAC2C7 /* HashiUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -153,6 +221,7 @@
 			targets = (
 				7AC24A592E35D8C000111972 /* Hashi */,
 				7AC24A812E35D8C300111972 /* HashiTests */,
+				CDD40DEAD71E6802DFC86B95 /* HashiUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -172,9 +241,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E02632DDEA545618936251F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		386BB933773A53FBFE777429 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7AC24A562E35D8C000111972 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -197,9 +280,35 @@
 			target = 7AC24A592E35D8C000111972 /* Hashi */;
 			targetProxy = 2A05798B30268A2100FA10FF /* PBXContainerItemProxy */;
 		};
+		AA13B2CD9886E575C502905D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Hashi;
+			target = 7AC24A592E35D8C000111972 /* Hashi */;
+			targetProxy = 0E55C51D4D76757C3830470F /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		32DAF118A4BF0379A8C6395F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8H42EZRCCP;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.kaikunze.hashiUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Hashi;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		7AC24A642E35D8C100111972 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -434,9 +543,37 @@
 			};
 			name = Release;
 		};
+		AE5027797F44E03DB36AAEA5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8H42EZRCCP;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.kaikunze.hashiUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Hashi;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2770AB5B305320AF5E4D489C /* Build configuration list for PBXNativeTarget "HashiUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32DAF118A4BF0379A8C6395F /* Release */,
+				AE5027797F44E03DB36AAEA5 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		7AC24A552E35D8C000111972 /* Build configuration list for PBXProject "Hashi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

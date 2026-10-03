@@ -8,15 +8,18 @@ struct SettingsView: View {
     var body: some View {
         @Bindable var progress = progress
         Form {
-            Section("Play") {
+            Section {
                 Toggle("Haptics", isOn: $progress.settings.hapticsEnabled)
                 Toggle("Show mistakes", isOn: $progress.settings.showErrors)
+            } header: {
+                Text("Play").foregroundStyle(Theme.ink)
             }
             Section {
                 Toggle("Complete forced islands", isOn: $progress.settings.autoCompleteForced)
                 Toggle("Show remaining count", isOn: $progress.settings.showRemainingCount)
             } footer: {
                 Text("Complete forced islands draws bridges the first two techniques prove. Show remaining count replaces each island's number with how many bridges it still needs.")
+                    .foregroundStyle(Theme.inkSoft)
             }
             storeSection
         }
@@ -54,9 +57,10 @@ struct SettingsView: View {
             }
             .disabled(entitlements.purchaseState.isBusy)
         } header: {
-            Text("Just Hashi")
+            Text("Just Hashi").foregroundStyle(Theme.ink)
         } footer: {
-            Text(storeFooter)
+            // The system grey only nearly passed over this background.
+            Text(storeFooter).foregroundStyle(Theme.inkSoft)
         }
     }
 

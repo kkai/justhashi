@@ -25,4 +25,15 @@ nonisolated enum TimeFormatting {
         if minutes < 60 { return "\(minutes)m" }
         return String(format: "%dh %02dm", minutes / 60, minutes % 60)
     }
+
+    /// A time for speech: "4 minutes 7 seconds". VoiceOver reads "4:07" as a
+    /// time of day.
+    static func spoken(_ interval: TimeInterval) -> String {
+        let total = max(0, Int(interval.rounded(.down)))
+        let (h, m, s) = (total / 3600, (total % 3600) / 60, total % 60)
+        func unit(_ n: Int, _ name: String) -> String { "\(n) \(name)\(n == 1 ? "" : "s")" }
+        if h > 0 { return [unit(h, "hour"), m > 0 ? unit(m, "minute") : nil].compactMap { $0 }.joined(separator: " ") }
+        if m > 0 { return [unit(m, "minute"), s > 0 ? unit(s, "second") : nil].compactMap { $0 }.joined(separator: " ") }
+        return unit(s, "second")
+    }
 }

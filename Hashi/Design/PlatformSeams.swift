@@ -131,6 +131,8 @@ struct SheetCloseButton: View {
                 .foregroundStyle(Theme.inkSoft)
                 .padding(Metrics.glyph * 0.75)
                 .background(Circle().fill(Theme.surface))
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
         }
         .buttonStyle(.hashi)
         .accessibilityLabel("Close")

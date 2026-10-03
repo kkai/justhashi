@@ -129,7 +129,15 @@ struct BoardView: View {
                 isRejected: rejectedIsland == island.id,
                 rippleHop: rippleDistances?[island.id],
                 entranceDelay: entranceDelay(island, layout: layout),
-                entranceDone: entranceDone
+                entranceDone: entranceDone,
+                onAssistiveEdge: { edge in
+                    // Through `onCycleEdge`, so a lesson can still refuse it;
+                    // the announcement reads the board afterwards.
+                    let before = game.board.bridges[edge]
+                    onCycleEdge(edge)
+                    BoardSpeech.announce(BoardSpeech.edgeChanged(
+                        game.puzzle.edges[edge], before: before, game: game))
+                }
             )
             .position(layout.point(for: island.position))
         }
@@ -230,6 +238,7 @@ private struct IslandView: View {
     let rippleHop: Int?
     let entranceDelay: TimeInterval
     let entranceDone: Bool
+    var onAssistiveEdge: (Int) -> Void = { _ in }
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var settled = false
@@ -249,9 +258,9 @@ private struct IslandView: View {
     }
 
     private var ringColor: Color {
-        if overfilled || isWarning { return Theme.vermillion }
-        if rippling { return Theme.foam }
-        if satisfied { return Theme.foam }
+        if overfilled || isWarning { return Theme.vermillionOnIsland }
+        if rippling { return Theme.foamOnIsland }
+        if satisfied { return Theme.foamOnIsland }
         return Theme.bridge
     }
 
@@ -276,11 +285,11 @@ private struct IslandView: View {
             }
             Text("\(displayedNumber)")
                 .font(Theme.islandFont(size: radius * 1.05))
-                .foregroundStyle(overfilled ? Theme.vermillion : Theme.inkOnIsland)
+                .foregroundStyle(overfilled ? Theme.vermillionOnIsland : Theme.inkOnIsland)
         }
         .frame(width: radius * 2, height: radius * 2)
         .scaleEffect(settleScale)
-        .offset(x: isRejected ? 4 : 0)
+        .offset(x: isRejected && !reduceMotion ? 4 : 0)
         .opacity(entranceDone ? (satisfied && !isSelected ? 0.82 : 1) : 0)
         .offset(y: entranceDone ? 0 : 10)
         .animation(Motion.boardEntrance.delay(entranceDelay), value: entranceDone)
@@ -300,6 +309,13 @@ private struct IslandView: View {
         .accessibilityLabel("Island \(island.clue), row \(island.position.row + 1), column \(island.position.col + 1)")
         .accessibilityValue(accessibilityValue)
         .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
+        .accessibilityActions {
+            ForEach(game.puzzle.edgesAt[island.id], id: \.self) { edge in
+                if let name = BoardSpeech.actionName(edge: game.puzzle.edges[edge], from: island, game: game) {
+                    Button(name) { onAssistiveEdge(edge) }
+                }
+            }
+        }
     }
 
     private var settleScale: CGFloat {
@@ -307,8 +323,16 @@ private struct IslandView: View {
     }
 
     private var accessibilityValue: String {
-        if overfilled { return "\(count) bridges, which is too many" }
-        if satisfied { return "complete" }
-        return "\(count) of \(island.clue) bridges"
+        var value = overfilled ? "\(count) bridges, which is too many"
+            : satisfied ? "complete" : "\(count) of \(island.clue) bridges"
+        // Where the corridors lead, so the actions make sense on their own.
+        let neighbours = game.puzzle.edgesAt[island.id].map { edge -> String in
+            let other = game.puzzle.islands[game.puzzle.edges[edge].other(island.id)]
+            let n = game.board.bridges[edge]
+            let link = n == 0 ? "no bridge" : n == 1 ? "1 bridge" : "2 bridges"
+            return "\(link) to the \(other.clue) \(BoardSpeech.side(of: other, from: island))"
+        }
+        if !neighbours.isEmpty { value += "; " + neighbours.joined(separator: ", ") }
+        return value
     }
 }

@@ -9,6 +9,14 @@ struct HashiApp: App {
     @State private var paywall = PaywallPresenter()
 
     init() {
+        #if DEBUG
+        // UI tests and accessibility audits start from a fresh install.
+        // DEBUG only, string included.
+        if ProcessInfo.processInfo.arguments.contains("-uiTestResetState"),
+           let domain = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: domain)
+        }
+        #endif
         let store = ProgressStore()
         _progress = State(initialValue: store)
         _mastery = State(initialValue: MasteryTracker(store: store))

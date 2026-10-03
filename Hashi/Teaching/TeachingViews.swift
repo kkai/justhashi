@@ -78,7 +78,6 @@ struct LearnMenuView: View {
             }
             .padding(16)
             .background(RoundedRectangle(cornerRadius: 16).fill(Theme.surface))
-            .opacity(dimmed ? 0.6 : 1)
         }
         .buttonStyle(.hashi)
         .disabled(masteryLocked)
@@ -169,7 +168,6 @@ struct PracticeMenuView: View {
                             }
                             .padding(16)
                             .background(RoundedRectangle(cornerRadius: 16).fill(Theme.surface))
-                            .opacity(masteryLocked || paywalled ? 0.6 : 1)
                         }
                         .buttonStyle(.hashi)
                         // Mastery only. A paywalled row must stay tappable.
@@ -267,7 +265,7 @@ private struct TutorialContent: View {
                 } label: {
                     Text(isLastStep ? "Finish" : "Next")
                         .font(.body.weight(.semibold))
-                        .foregroundStyle(Theme.island)
+                        .foregroundStyle(Theme.onBridge)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 11)
                         .background(RoundedRectangle(cornerRadius: 12).fill(Theme.bridge))
@@ -346,7 +344,8 @@ struct PracticeView: View {
                                    onMore: { escalate(game: game) },
                                    onApply: hint.level == .resolution ? { apply(game: game) } : nil,
                                    onDismiss: { self.hint = nil },
-                                   onUnlock: { paywall.present(.teachingHints) })
+                                   onUnlock: { paywall.present(.teachingHints) },
+                                   puzzle: game.puzzle)
                     }
                 }
             }
@@ -426,6 +425,9 @@ struct HintBanner: View {
     let onDismiss: () -> Void
     /// Defaulted so callers that never show a locked hint compile unchanged.
     var onUnlock: () -> Void = {}
+    /// For the spoken positions; nil (no board) speaks the text alone.
+    var puzzle: HashiPuzzle? = nil
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -441,6 +443,8 @@ struct HintBanner: View {
                     Image(systemName: "xmark")
                         .font(.system(size: 12, weight: .bold))
                         .foregroundStyle(Theme.inkSoft)
+                        .frame(minWidth: 44, minHeight: 44)
+                        .contentShape(Rectangle())
                 }
                 .accessibilityLabel("Dismiss hint")
             }
@@ -472,7 +476,13 @@ struct HintBanner: View {
         .padding(.horizontal, 16)
         .padding(.bottom, 8)
         .frame(maxWidth: Metrics.column)
-        .transition(.move(edge: .bottom).combined(with: .opacity))
+        .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
+        // Every rung: "Tell me more" swaps the text in place, which VoiceOver
+        // doesn't notice on its own.
+        .onAppear { BoardSpeech.announce(BoardSpeech.spokenHint(hint, puzzle: puzzle)) }
+        .onChange(of: hint) { _, hint in
+            BoardSpeech.announce(BoardSpeech.spokenHint(hint, puzzle: puzzle))
+        }
     }
 
     private func bannerButton(_ title: String, filled: Bool,
@@ -480,9 +490,8 @@ struct HintBanner: View {
         Button(action: action) {
             Text(title)
                 .font(.subheadline.weight(.semibold))
-                .foregroundStyle(filled ? Theme.island : Theme.bridge)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 9)
+                .foregroundStyle(filled ? Theme.onBridge : Theme.bridge)
+                .frame(maxWidth: .infinity, minHeight: 44)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
                         .fill(filled ? Theme.bridge : Theme.bridgeWash)

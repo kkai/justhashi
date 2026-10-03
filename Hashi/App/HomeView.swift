@@ -105,7 +105,8 @@ struct HomeView: View {
             Text("JUST")
                 .font(.system(size: size * 0.32, weight: .semibold, design: .rounded))
                 .kerning(size * 0.18)
-                .foregroundStyle(Theme.inkSoft)
+                // Ink, not inkSoft: small caps over the moving sea failed 4.5:1.
+                .foregroundStyle(Theme.ink)
             Text("Hashi")
                 .font(.system(size: size, weight: .bold, design: .rounded))
                 .foregroundStyle(Theme.ink)
@@ -141,8 +142,9 @@ struct HomeView: View {
                         .foregroundStyle(Theme.ink)
                     if let saved = progress.savedGame {
                         Text(TimeFormatting.clock(saved.elapsed))
-                            .font(Theme.numberFont(size: 14))
+                            .numberFont(14)
                             .foregroundStyle(Theme.inkSoft)
+                            .accessibilityLabel(TimeFormatting.spoken(saved.elapsed))
                     }
                 }
                 Spacer()
@@ -171,7 +173,7 @@ struct HomeView: View {
             } label: {
                 Text("Play")
                     .font(.body.weight(.semibold))
-                    .foregroundStyle(Theme.island)
+                    .foregroundStyle(Theme.onBridge)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 13)
                     .background(RoundedRectangle(cornerRadius: 12).fill(Theme.bridge))
@@ -186,7 +188,7 @@ struct HomeView: View {
         Button(action: action) {
             HStack(spacing: 14) {
                 Image(systemName: symbol)
-                    .font(.system(size: 17, weight: .medium))
+                    .scaledFont(17, weight: .medium)
                     .foregroundStyle(Theme.bridge)
                     .frame(width: 26)
                 Text(title)
@@ -252,7 +254,7 @@ struct DailyCard: View {
                 Image(systemName: "flame.fill")
                     .foregroundStyle(Theme.vermillion)
                 Text("\(streak)")
-                    .font(Theme.numberFont(size: 17))
+                    .numberFont(17)
                     .foregroundStyle(Theme.ink)
             }
         } else {
@@ -265,7 +267,7 @@ struct DailyCard: View {
     private func doneSeal(_ time: TimeInterval) -> some View {
         HStack(spacing: 8) {
             Text(TimeFormatting.clock(time))
-                .font(Theme.numberFont(size: 15))
+                .numberFont(15)
                 .foregroundStyle(Theme.inkSoft)
             ZStack {
                 RoundedRectangle(cornerRadius: 5)
@@ -281,7 +283,7 @@ struct DailyCard: View {
 
     private var accessibilityText: String {
         if let time = progress.dailyTime(today) {
-            return "Daily puzzle, completed in \(TimeFormatting.clock(time))"
+            return "Daily puzzle, completed in \(TimeFormatting.spoken(time))"
         }
         let streak = progress.displayStreak(today: today)
         return streak > 0

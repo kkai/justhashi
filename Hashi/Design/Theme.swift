@@ -80,7 +80,8 @@ nonisolated enum Theme {
     static let ink = dynamic(light: ThemeRGBA(red: 0.075, green: 0.118, blue: 0.169, alpha: 1),
                              dark: ThemeRGBA(red: 0.886, green: 0.906, blue: 0.914, alpha: 1))
     /// Secondary text, quiet labels.
-    static let inkSoft = dynamic(light: ThemeRGBA(red: 0.075, green: 0.118, blue: 0.169, alpha: 0.55),
+    /// Light alpha 0.70: at 0.55 it measured 3.7:1 on the sea (docs/ACCESSIBILITY.md).
+    static let inkSoft = dynamic(light: ThemeRGBA(red: 0.075, green: 0.118, blue: 0.169, alpha: 0.70),
                                  dark: ThemeRGBA(red: 0.886, green: 0.906, blue: 0.914, alpha: 0.55))
     /// Numerals on island discs — discs stay light in both modes, so this is
     /// the *light-mode* ink in both variants. Not a stylistic accident.
@@ -101,8 +102,19 @@ nonisolated enum Theme {
                               dark: ThemeRGBA(red: 0.529, green: 0.749, blue: 0.702, alpha: 1))
     /// Hanko vermillion: errors, overfill, isolation warnings — and the win
     /// seal + streak mark. The two uses never share a screen.
-    static let vermillion = dynamic(light: ThemeRGBA(red: 0.827, green: 0.290, blue: 0.196, alpha: 1),
+    static let vermillion = dynamic(light: ThemeRGBA(red: 0.720, green: 0.220, blue: 0.140, alpha: 1),
                                     dark: ThemeRGBA(red: 0.914, green: 0.451, blue: 0.353, alpha: 1))
+    /// Vermillion drawn on an island disc, which is light in both modes:
+    /// the dark-mode vermillion is too pale there (3.4:1).
+    static let vermillionOnIsland = dynamic(light: ThemeRGBA(red: 0.720, green: 0.220, blue: 0.140, alpha: 1),
+                                            dark: ThemeRGBA(red: 0.700, green: 0.200, blue: 0.120, alpha: 1))
+    /// The satisfied ring, drawn on the disc. `foam` there measured 2.2–2.8:1,
+    /// so a finished island lost its ring; this keeps 3.9:1 or more.
+    static let foamOnIsland = dynamic(light: ThemeRGBA(red: 0.250, green: 0.470, blue: 0.440, alpha: 1),
+                                      dark: ThemeRGBA(red: 0.200, green: 0.420, blue: 0.390, alpha: 1))
+    /// Text on a `bridge` fill. `island` was 2.0:1 on the pale dark-mode bridge.
+    static let onBridge = dynamic(light: .white,
+                                  dark: ThemeRGBA(red: 0.043, green: 0.075, blue: 0.114, alpha: 1))
     /// Hairlines, grid dots, separators.
     static let hairline = dynamic(light: ThemeRGBA(red: 0.075, green: 0.118, blue: 0.169, alpha: 0.14),
                                   dark: ThemeRGBA(red: 0.886, green: 0.906, blue: 0.914, alpha: 0.14))

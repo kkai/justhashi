@@ -117,7 +117,7 @@ struct StatsView: View {
                 .foregroundStyle(Theme.ink)
             Spacer()
             Text(value)
-                .font(Theme.numberFont(size: 15))
+                .numberFont(15)
                 .foregroundStyle(Theme.bridge)
         }
     }

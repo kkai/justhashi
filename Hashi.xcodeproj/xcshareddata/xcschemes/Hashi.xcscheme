@@ -38,6 +38,16 @@
                ReferencedContainer = "container:Hashi.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CDD40DEAD71E6802DFC86B95"
+               BuildableName = "HashiUITests.xctest"
+               BlueprintName = "HashiUITests"
+               ReferencedContainer = "container:Hashi.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

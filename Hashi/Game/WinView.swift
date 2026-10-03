@@ -25,7 +25,7 @@ struct WinView: View {
                             .font(Theme.heading)
                             .foregroundStyle(Theme.ink)
                         Text(TimeFormatting.clock(game.elapsed))
-                            .font(Theme.numberFont(size: 40))
+                            .numberFont(40, relativeTo: .largeTitle)
                             .foregroundStyle(Theme.bridge)
                         if isNewBest {
                             Text("New best time")
@@ -62,7 +62,7 @@ struct WinView: View {
                 } label: {
                     Text("Done")
                         .font(.body.weight(.semibold))
-                        .foregroundStyle(Theme.island)
+                        .foregroundStyle(Theme.onBridge)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 13)
                         .background(RoundedRectangle(cornerRadius: 12).fill(Theme.bridge))
@@ -136,7 +136,7 @@ struct WinView: View {
                             .foregroundStyle(Theme.ink)
                         Spacer()
                         Text("×\(game.generated.techniqueProfile[technique] ?? 0)")
-                            .font(Theme.numberFont(size: 13))
+                            .numberFont(13)
                             .foregroundStyle(Theme.inkSoft)
                     }
                 }
