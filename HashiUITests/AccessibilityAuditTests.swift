@@ -77,6 +77,14 @@ final class AccessibilityAuditTests: XCTestCase {
         try audit()
     }
 
+    func testPastDailies() throws {
+        app.launch()
+        app.buttons["Past dailies"].tap()
+        sleep(1)
+        acceptListFalsePositives = true
+        try audit()
+    }
+
     func testSettings() throws {
         app.launch()
         app.buttons["Settings"].tap()

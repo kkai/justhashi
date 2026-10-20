@@ -1,0 +1,7 @@
+Share your Daily. When you solve it, the win card makes a picture of the board's islands with your time and streak. It shows no numbers and no bridges, so it gives nothing away to anyone who hasn't played yet.
+
+Past dailies: every Daily since launch, with your times. Finishing an old one late keeps its time and leaves your streak alone. Opening past boards is part of the full game; today's Daily stays free.
+
+The board can now be played with VoiceOver. Each island reads its clue and its bridges, moves and hints are spoken, and text, contrast and touch targets follow your accessibility settings.
+
+Fixed: finishing an older Daily after a newer one no longer resets your streak to 1.

@@ -7,6 +7,7 @@ nonisolated enum PaidFeature: String, CaseIterable, Sendable, Identifiable {
     case teachingHints
     case largeBoards
     case stats
+    case dailyArchive
 
     var id: String { rawValue }
 
@@ -17,6 +18,7 @@ nonisolated enum PaidFeature: String, CaseIterable, Sendable, Identifiable {
         case .teachingHints: "Hints that teach"
         case .largeBoards: "Large boards"
         case .stats: "Your progress"
+        case .dailyArchive: "Past dailies"
         }
     }
 
@@ -32,6 +34,8 @@ nonisolated enum PaidFeature: String, CaseIterable, Sendable, Identifiable {
             "The 13 by 13 puzzles, where counting and connectivity get much harder. The weekend Daily is one of these, and it stays free."
         case .stats:
             "Best times, solve counts and your mastery path across all eight techniques."
+        case .dailyArchive:
+            "Every Daily you missed, back to launch day. Late solves keep their time and leave your streak alone. Today's Daily stays free."
         }
     }
 }

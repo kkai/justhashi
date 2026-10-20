@@ -42,15 +42,34 @@ struct PuzzleCacheTests {
         })
     }
 
+    /// A cache whose `started` counter only counts generations that began
+    /// before the first one finished. Settling a claim re-warms its key, so by
+    /// the time `puzzle()` returns a second generation is legitimately under
+    /// way, and whether its bump has landed is a race (an exact total failed
+    /// intermittently here, 3 runs in 25). The re-warm can only start after
+    /// the first generation ends; a duplicate started by `request` would start
+    /// during it, which the 50 ms busy-wait makes certain to observe.
+    private static func firstGenerationCache(_ started: Counter, id: String) -> PuzzleCache {
+        let finished = Counter()
+        return PuzzleCache(generate: { options, _ in
+            if finished.count(id) == 0 { _ = started.bump(id) }
+            let start = DispatchTime.now().uptimeNanoseconds
+            while DispatchTime.now().uptimeNanoseconds - start < 50_000_000 {}
+            _ = finished.bump(id)
+            return HashiGenerator.generate(
+                .init(size: .small, difficulty: .easy, seed: options.seed))
+        })
+    }
+
     @Test func requestAfterWarmAwaitsTheSameGeneration() async {
-        let counter = Counter()
+        let started = Counter()
         let id = UUID().uuidString
-        let cache = Self.instrumentedCache(counter, id: id)
+        let cache = Self.firstGenerationCache(started, id: id)
         cache.warm(.standard(.small, .easy))
         let request = cache.request(.standard(.small, .easy))
         let puzzle = await request.puzzle()
         #expect(puzzle != nil)
-        #expect(counter.count(id) == 1, "warm + request must share one generation")
+        #expect(started.count(id) == 1, "warm + request must share one generation")
     }
 
     /// Two keys must never share one generation — a claim on `.small/.easy`
@@ -96,15 +115,15 @@ struct PuzzleCacheTests {
     }
 
     @Test func dailyKeyIsCacheable() async {
-        let counter = Counter()
+        let started = Counter()
         let id = UUID().uuidString
-        let cache = Self.instrumentedCache(counter, id: id)
+        let cache = Self.firstGenerationCache(started, id: id)
         let day = DayKey(year: 2026, month: 8, day: 7)
         cache.warm(.daily(day))
         let request = cache.request(.daily(day))
         let puzzle = await request.puzzle()
         #expect(puzzle != nil)
-        #expect(counter.count(id) == 1)
+        #expect(started.count(id) == 1)
     }
 
     @Test func dailyKeyOptionsAreDeterministic() {

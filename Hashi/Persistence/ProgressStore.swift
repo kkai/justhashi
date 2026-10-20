@@ -140,15 +140,13 @@ final class ProgressStore {
     func recordDailyCompleted(day: DayKey, time: TimeInterval) {
         guard !hasCompletedDaily(day) else { return }
         daily.completedTimes[day.isoString] = time
-        if daily.lastCompleted == day.previous() {
-            daily.currentStreak += 1
-        } else {
-            daily.currentStreak = 1
+        if let last = daily.lastCompleted, !(last < day) {
+            // An older day finished after a newer one: record the time only.
+            save(daily, key: Key.daily)
+            return
         }
-        // Only move forward — replaying an older day must not rewind the chain.
-        if daily.lastCompleted == nil || daily.lastCompleted! < day {
-            daily.lastCompleted = day
-        }
+        daily.currentStreak = daily.lastCompleted == day.previous() ? daily.currentStreak + 1 : 1
+        daily.lastCompleted = day
         daily.bestStreak = max(daily.bestStreak, daily.currentStreak)
         save(daily, key: Key.daily)
     }

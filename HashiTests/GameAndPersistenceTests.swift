@@ -286,7 +286,13 @@ struct DailyStreakTests {
         let store = freshStore()
         store.recordDailyCompleted(day: DayKey(year: 2026, month: 8, day: 6), time: 100)
         store.recordDailyCompleted(day: DayKey(year: 2026, month: 8, day: 7), time: 100)
-        store.recordDailyCompleted(day: DayKey(year: 2026, month: 8, day: 1), time: 100)
+        store.recordDailyCompleted(day: DayKey(year: 2026, month: 8, day: 1), time: 90)
         #expect(store.daily.lastCompleted == DayKey(year: 2026, month: 8, day: 7))
+        // A saved older daily finished late records its time and touches
+        // nothing else; it used to reset the live streak to 1.
+        #expect(store.daily.currentStreak == 2)
+        #expect(store.daily.bestStreak == 2)
+        #expect(store.dailyTime(DayKey(year: 2026, month: 8, day: 1)) == 90)
+        #expect(store.displayStreak(today: DayKey(year: 2026, month: 8, day: 8)) == 2)
     }
 }

@@ -37,6 +37,7 @@ struct HomeView: View {
 
                     newGameCard
 
+                    row("Past dailies", symbol: "calendar") { path.append(.dailyArchive) }
                     row("Learn", symbol: "book") { path.append(.learn) }
                     row("Practice", symbol: "repeat") { path.append(.practiceMenu) }
                     row("Stats", symbol: "chart.bar") { path.append(.stats) }

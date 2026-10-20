@@ -14,6 +14,7 @@ struct WinView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var stamped = false
+    @State private var shareImage: Image?
 
     var body: some View {
         ZStack {
@@ -34,6 +35,7 @@ struct WinView: View {
                         }
                         if let day = game.dailyKey {
                             streakLine(day)
+                            shareButton(day)
                         }
                     }
                     .frame(maxWidth: .infinity)
@@ -70,6 +72,16 @@ struct WinView: View {
                 .buttonStyle(.hashi)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 16)
+            }
+        }
+        .task {
+            guard let day = game.dailyKey else { return }
+            let card = DailyShareCard(puzzle: game.puzzle, day: day,
+                                      time: game.elapsed, streak: sharedStreak(day))
+            let renderer = ImageRenderer(content: card)
+            renderer.scale = 3
+            if let image = renderer.uiImage {
+                shareImage = Image(uiImage: image)
             }
         }
         .onAppear {
@@ -112,6 +124,34 @@ struct WinView: View {
             }
         }
         .padding(.top, 2)
+    }
+
+    /// The streak this solve belongs to, or nil for an older daily finished
+    /// late, which records a time but doesn't extend the chain.
+    private func sharedStreak(_ day: DayKey) -> Int? {
+        progress.daily.lastCompleted == day ? progress.daily.currentStreak : nil
+    }
+
+    @ViewBuilder
+    private func shareButton(_ day: DayKey) -> some View {
+        let text = DailyShare.text(day: day, rows: game.puzzle.rows, cols: game.puzzle.cols,
+                                   time: game.elapsed, streak: sharedStreak(day))
+        Group {
+            if let shareImage {
+                ShareLink(item: shareImage, subject: Text("Just Hashi daily"), message: Text(text),
+                          preview: SharePreview("Just Hashi daily", image: shareImage)) {
+                    Label("Share", systemImage: "square.and.arrow.up")
+                }
+            } else {
+                ShareLink(item: text) {
+                    Label("Share", systemImage: "square.and.arrow.up")
+                }
+            }
+        }
+        .font(.subheadline.weight(.semibold))
+        .tint(Theme.bridge)
+        .padding(.top, 4)
+        .accessibilityLabel("Share result")
     }
 
     /// What this puzzle exercised — each row a door back into the lesson.

@@ -32,6 +32,8 @@ struct ContentView: View {
             GameLoaderView(key: .daily(day),
                            requestedDifficulty: DailySeed.spec(for: day).difficulty,
                            dailyKey: day)
+        case .dailyArchive:
+            DailyArchiveView(path: $path)
         case .resumeGame:
             ResumeGameView()
         case .tutorial(let technique):

@@ -22,6 +22,7 @@ struct SettingsView: View {
                     .foregroundStyle(Theme.inkSoft)
             }
             storeSection
+            siblingsSection
         }
         .navigationTitle("Settings")
         .navigationTitleDisplay(.inline)
@@ -64,6 +65,33 @@ struct SettingsView: View {
         }
     }
 
+    /// The other Just Puzzles games that are on sale. Plain App Store links:
+    /// no tracking, no prompt, nothing that interrupts play.
+    private static let siblings: [(name: String, blurb: String, appID: String)] = [
+        ("Just Kakuro", "Sums in a crossword grid", "6796701026"),
+        ("Just Shikaku", "Cut the grid into rectangles", "6801529551"),
+        ("Just Nurikabe", "Shade the sea around numbered islands", "6816718565"),
+        ("Numeriqo", "Calcudoku, taught step by step", "6749287069"),
+    ]
+
+    private var siblingsSection: some View {
+        Section {
+            ForEach(Self.siblings, id: \.appID) { app in
+                if let url = URL(string: "https://apps.apple.com/app/id\(app.appID)") {
+                    Link(destination: url) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(app.name).foregroundStyle(Theme.ink)
+                            Text(app.blurb).font(.footnote).foregroundStyle(Theme.inkSoft)
+                        }
+                    }
+                    .accessibilityHint("Opens the App Store")
+                }
+            }
+        } header: {
+            Text("More Just Puzzles").foregroundStyle(Theme.ink)
+        }
+    }
+
     /// Says which of restoring, restored, found-nothing and failed happened.
     /// Silence after a restore is indistinguishable from a broken button.
     ///
@@ -80,7 +108,7 @@ struct SettingsView: View {
         default:
             entitlements.isUnlocked
                 ? "The full game is unlocked on this Apple Account."
-                : "One purchase unlocks every lesson, every drill, the teaching hints, large boards and stats. Already bought it? Restore brings it back on this device."
+                : "One purchase unlocks every lesson, every drill, the teaching hints, large boards, past dailies and stats. Already bought it? Restore brings it back on this device."
         }
     }
 }
