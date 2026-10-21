@@ -1,8 +1,10 @@
 # Just Hashi 1.1: submission runbook
 
-State on 2026-10-20: **built and tested locally on branch `release-1.1`, nothing
-in App Store Connect yet.** Nothing is merged to `main`, pushed, uploaded or
-submitted. `AppStore/SUBMISSION.md` still holds the record facts and the
+State on 2026-10-21: **merged to `main` and pushed (07ac73e); iOS 1.1 version
+created in ASC with What's New; no build uploaded, nothing submitted.**
+Version id `b3c34cb4-7d78-4836-ada2-d1702c3413dd`, en-US localization
+`0ac3c407-e9e3-4b9f-8f00-b1004dbd0180` (copyright 2026 Kai Kunze,
+`AFTER_APPROVAL`; description and keywords carried over from 1.0). `AppStore/SUBMISSION.md` still holds the record facts and the
 traps; read it first.
 
 ## What 1.1 is
@@ -33,9 +35,9 @@ The daily schedule and seed are untouched (shipped API).
 ## Left for Kai
 
 - [ ] Look at the share card and the Past dailies screen on a device.
-- [ ] Merge `release-1.1` into `main`, push to kkai/justhashi.
-- [ ] Create the iOS 1.1 version in ASC; What's New from
-      `metadata/whatsnew-1.1.txt`.
+- [x] Merge `release-1.1` into `main`, push to kkai/justhashi (2026-10-21).
+- [x] Create the iOS 1.1 version in ASC; What's New from
+      `metadata/whatsnew-1.1.txt` (set and read back 2026-10-21).
 - [ ] The IAP display description and `metadata/description.txt` list what the
       unlock buys; add past dailies (the IAP description caps at 55 characters).
 - [ ] Review notes: past dailies are paid, today's Daily free; the share image
